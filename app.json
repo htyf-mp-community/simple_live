@@ -1,0 +1,15 @@
+{
+  "name": "apps",
+  "displayName": "apps",
+  "htyf": {
+    "type": "app",
+    "entry": "./src/index.tsx",
+    "version": "1.0.15",
+    "name": "live",
+    "appid": "htyfapp7b7f3653dc29da5a2547bf19b4d171ba",
+    "rotate": "portrait",
+    "appUrlConfig": "https://xxxxx/app.json",
+    "zipUrl": "https://xxxxx/dist.[PLATFORM].dgz",
+    "projectname": "直播基地"
+  }
+}

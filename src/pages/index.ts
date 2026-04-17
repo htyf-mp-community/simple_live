@@ -1,0 +1,21 @@
+export {default as home} from './home';
+export { default as RoomPlayer } from './home/RoomPlayer';
+export { default as indexed } from './indexed';
+export { default as followUser } from './follow-user';
+export { default as category } from './category';
+export { default as CategoryDetail } from './category/category-detail';
+export { default as mine } from './mine';
+export { default as search } from './search';
+export { default as History } from './history';
+export { default as AppStyleSetting } from './settings/app-style-setting';
+export { default as PlaySettings } from './settings/play-settings';
+export { default as FollowSettings } from './settings/follow-settings';
+export { default as IndexedSettings } from './settings/indexed-settings';
+export { default as AutoExitSettings } from './settings/auto-exit-settings';
+export { default as DanmuSettings } from './settings/danmu-settings';
+export { default as DanmuShield } from './settings/danmu-shield';
+export { default as Account } from './account';
+export { default as Parse } from './parse';
+export { default as Sync } from './sync';
+export { default as OtherSettings } from './settings/other-settings';
+
