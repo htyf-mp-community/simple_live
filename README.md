@@ -1,114 +1,103 @@
-## React Native 应用小程序说明
+> ### ⚠ 说明
+>
+> 本仓库为 **红糖云服 App** 内的 **React Native 应用小程序**（直播聚合）。需在宿主 App 中加载资源包，或按下方流程本地编译调试；分发与更新方式以 `app.json` 与官方文档为准。
 
-本目录下的项目是一个 **基于 React Native 的应用小程序模版**，用于在 **红糖云服 App** 中运行。
+<h2 align="center">直播基地</h2>
 
-- 官方网站：[`https://mp.dagouzhi.com/`](https://mp.dagouzhi.com/)
-- GitHub 组织：[`https://github.com/htyf-mp-community`](https://github.com/htyf-mp-community)
+<p align="center">简简单单的看直播 · 红糖云服小程序版</p>
 
-通过配置 `app.json` 与打包命令，可以将本应用发布到红糖云服 App，供他人体验和远程更新。
+<p align="center">参考 <a href="https://github.com/xiaoyaocz/dart_simple_live"><strong>Simple Live</strong></a>（<code>dart_simple_live</code>）的思路与能力边界，用 React Native 在红糖云服内重新实现。</p>
 
-### 开发环境准备
+<p align="center">
+  <a href="https://mp.dagouzhi.com/">红糖云服 · 小程序官网</a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/htyf-mp-community">GitHub 组织</a>
+</p>
 
-- **安装依赖**
-  在仓库根目录或本目录（视项目脚本而定）执行：
+## 演示截图
+
+| 首页 | 分类 |
+| :---: | :---: |
+| ![首页 · 多平台 Tab 与直播卡片](docs/IMG_0782.PNG) | ![分类 · 游戏分区](docs/IMG_0780.PNG) |
+
+| 直播间 | 我的 |
+| :---: | :---: |
+| ![直播间 · 播放器与弹幕](docs/IMG_0783.PNG) | ![我的 · 记录与设置入口](docs/IMG_0781.PNG) |
+
+---
+
+## 支持直播平台
+
+- 哔哩哔哩直播
+- 斗鱼直播
+- 虎牙直播
+- 抖音直播
+
+## APP / 运行形态
+
+- [x] **红糖云服 App**（应用小程序，远程 zip 资源）
+- [x] **本地开发**：Android / iOS（标准 React Native 工程）
+
+## 项目结构（节选）
+
+| 路径 | 说明 |
+|------|------|
+| `src/index.tsx` | 小程序入口（宿主加载的根组件） |
+| `src/pages/home/` | 首页、房间列表、播放器 `RoomPlayer` 等 |
+| `src/pages/home/core/api/` | 各站点拉流 / 房间信息 API（如 `bilibiliSite`、`douyuSite` 等） |
+| `src/pages/home/core/danmaku/` | 各平台弹幕连接与解析 |
+| `src/router/` | 导航与路由 |
+| `app.json` | 红糖云服元数据：`appid`、`zipUrl`、`appUrlConfig`、`htyf` 等 |
+| `webpack.config.mjs` / `metro.config.js` | 打包与 Metro / Repack 配置 |
+
+## 环境
+
+| 依赖 | 版本要求（以仓库为准） |
+|------|-------------------------|
+| Node.js | `>= 20`（见 `package.json` engines） |
+| React Native | `0.83.x`（与 `react-native` 依赖一致） |
+| 包管理 | 推荐使用 `yarn`（与官方模版一致） |
+
+安装依赖（仓库根目录）：
 
 ```bash
 yarn
 ```
 
-用于安装 React Native 工程及相关工具依赖。
+## 开发与打包
 
-- **React Native 开发**
-  - 按标准 React Native 开发流程进行：
-    - 在本目录进行 JS/TS 代码开发。
-    - 调试方式与普通 RN 项目一致（Metro、调试工具等）。
-
-### 资源地址配置（app.json）
-
-通过修改 `app.json` 中的字段，让别人可以拉取和更新你的应用资源：
-
-- **appUrlConfig**
-  - 指定应用配置 / 元数据地址（如版本号、更新说明等）。
-  - 一般为 HTTP(S) 接口或静态 JSON 配置地址。
-
-- **zipUrl**
-  - 指定应用静态资源压缩包（zip）的下载地址。
-  - 他人只需按约定更新此 zip 包，即可完成分发或在线更新。
-
-> 记忆小贴士：  
-> - `appUrlConfig`：从哪儿拿“配置”。  
-> - `zipUrl`：从哪儿拿“代码资源包”。
-
-### app.json 字段总览
-
-下面是 `app.json` 的完整结构（示意）以及各字段的含义：
-
-```ts
-{
-  /**
-   * 应用类型
-   * 1. app: 小程序（本模版）
-   * 2. game: 小游戏
-   * 3. web: H5/WebView 小程序
-   * 4. plugin: 插件
-   */
-  type: 'app' | 'game' | 'web' | 'plugin';
-  /** appid，小程序在红糖云服中的唯一 ID */
-  appid: string;
-  /**
-   * 横竖屏配置
-   * - undefined/null: 默认竖屏
-   * - 'auto': 自动随系统竖/横屏
-   * - 'landscape': 横屏
-   * - 'portrait': 竖屏
-   */
-  rotate?: 'auto' | 'landscape' | 'portrait';
-  /** 应用图标地址 */
-  icon?: string;
-  /** 应用名称（展示名称） */
-  name: string;
-  /** 资源地址（静态资源 zip 包） */
-  zipUrl: string;
-  /** 版本号 */
-  version: string;
-  /** 线上配置地址（如 app.json 配置接口） */
-  appUrlConfig: string;
-  /** H5 应用地址（仅 type='web' 时有意义） */
-  webUrl?: string;
-  /** 引擎版本（如 react-native@0.7x.x） */
-  engines: string;
-}
-```
-
-- 对于 **应用模版**（`type: 'app'`）：
-  - 建议必填：`type`、`appid`、`name`、`zipUrl`、`version`、`appUrlConfig`、`engines`。
-  - 可选：`rotate`（横竖屏）、`icon`、`webUrl`（一般不用）。
-  - 客户端会先访问 `appUrlConfig` 获取最新配置，再根据配置或本地的 `zipUrl` 加载 React Native 资源包。
-
-### app.js 的作用
-
-- `app.js` 是 **React Native 应用小程序的入口文件**：
-  - 导出整个小程序的根组件（通常包含导航、Tab、路由等）。
-  - 负责初始化红糖云服相关能力（如从宿主 App 读取上下文、用户信息等）。
-  - 按需监听小程序生命周期（如进入前台 / 后台）并做状态恢复。
-- 红糖云服会以 `app.js` 导出的组件作为运行入口，将其挂载到容器中。
-
-### 在红糖云服 App 上体验 / 真机高试
-
-当你希望在红糖云服 App 内体验或给他人真机测试时，可通过打包命令生成资源包：
+- **日常调试**：与普通 React Native 项目相同，例如 `yarn start`，再 `yarn android` / `yarn ios`。
+- **在红糖云服 App 内体验 / 发版资源包**：
 
 ```bash
 npm run htyf
 ```
 
-- 会打包当前 React Native 应用小程序资源。
-- 生成供红糖云服 App 拉取的分发 / 高试包。
+生成可供宿主拉取的分发包后，将 zip 上传到 `app.json` → `htyf.zipUrl` 所指向的位置，并维护 `appUrlConfig` 中的版本与说明。
 
-### 推荐工作流
+### `app.json` 要点（红糖云服）
 
-1. 使用 React Native 正常开发、调试应用代码。
-2. 在 `app.json` 中配置好 `appUrlConfig`、`zipUrl`，约定给其他人使用和更新的地址。
-3. 需要在红糖云服 App 上体验或对外发版时，执行 `npm run htyf` 完成打包。
-4. 将生成的 zip 资源上传到 `zipUrl` 对应位置，他人即可通过该地址获取或更新应用资源。
+- **`appUrlConfig`**：线上配置 / 元数据地址（版本、更新说明等）。
+- **`zipUrl`**：静态资源 zip 的下载地址。
+- 客户端会先拉取配置，再按约定加载 RN 资源包。
 
+## 参考及引用
 
+- **[Simple Live](https://github.com/xiaoyaocz/dart_simple_live)**（`dart_simple_live`）：**本项目即参考该项目开发**——多平台直播、房间与弹幕等能力在其开源实现基础上有取舍与适配；原项目为 Flutter 全端客户端，本仓库为 **React Native**，并作为 **红糖云服应用小程序** 分发，技术栈、工程结构与发布方式均不同，并非官方移植版。
+- 其他公开资料（弹幕协议、直播地址解析等）的使用请遵守各平台服务条款与法律法规。
+
+## 声明
+
+本项目功能基于互联网上公开资料与学习交流目的开发。**严禁将本项目用于商业用途**；若用于红糖云服小程序分发，请同时遵守宿主平台与红糖云服的相关规则。
+
+若您认为本仓库内容侵犯合法权益，请联系作者以便及时处理。
+
+## Star History
+
+<a href="https://www.star-history.com/#htyf-mp-community/simple_live&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=htyf-mp-community/simple_live&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=htyf-mp-community/simple_live&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=htyf-mp-community/simple_live&type=Date" />
+  </picture>
+</a>
