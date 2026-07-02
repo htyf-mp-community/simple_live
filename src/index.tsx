@@ -32,6 +32,7 @@ function RootFix() {
 const MiniApp = () => {
   useEffect(() => {
     const tryShowInterstitialAd = async () => {
+      return;
       const INTERSTITIAL_AD_STORAGE_KEY = 'interstitial_ad_last_shown_at';
       /** 冷却时间（毫秒），此时间内只调用一次 showInterstitialAd */
       const INTERSTITIAL_AD_COOLDOWN_MS = 8 * 60 * 1000;
