@@ -18,4 +18,4 @@ export { default as Account } from './account';
 export { default as Parse } from './parse';
 export { default as Sync } from './sync';
 export { default as OtherSettings } from './settings/other-settings';
-
+export { StreamScreen, SecondScreen } from './publisher';

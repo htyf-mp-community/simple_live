@@ -15,6 +15,12 @@ if linkage != nil
 end
 
 target 'apps' do
+
+  # Vendored HaishinKit 2.x podspecs for react-native-nitro-rtmp-publisher.
+  # Upstream stopped publishing to CocoaPods trunk after 2.0.9.
+  pod 'HaishinKit',     :podspec => '../node_modules/react-native-nitro-rtmp-publisher/podspecs/HaishinKit.podspec'
+  pod 'RTMPHaishinKit', :podspec => '../node_modules/react-native-nitro-rtmp-publisher/podspecs/RTMPHaishinKit.podspec'
+
   config = use_native_modules!
 
   use_react_native!(
@@ -24,6 +30,32 @@ target 'apps' do
   )
 
   post_install do |installer|
+
+    # Legacy-RTMP fix (Agora RTLS or any legacy FMS-style server): send
+    # releaseStream/FCPublish fire-and-forget so createStream isn't blocked
+    # ~15s on servers that never reply to them. Idempotent; no-op if upstream
+    # renames the lines.
+    rtmp_hk_stream = File.join(__dir__, 'Pods', 'RTMPHaishinKit', 'RTMPHaishinKit', 'Sources', 'RTMP', 'RTMPStream.swift')
+    if File.exist?(rtmp_hk_stream)
+      rtmp_src = File.read(rtmp_hk_stream)
+      rtmp_orig = rtmp_src.dup
+      {
+        'async let _ = connection?.call("releaseStream", arguments: fcPublishName)' =>
+          'Task { _ = try? await connection?.call("releaseStream", arguments: fcPublishName) }',
+        'async let _ = connection?.call("FCPublish", arguments: fcPublishName)' =>
+          'Task { _ = try? await connection?.call("FCPublish", arguments: fcPublishName) }',
+      }.each do |rtmp_from, rtmp_to|
+        next if rtmp_src.include?(rtmp_to)
+        rtmp_src = rtmp_src.sub(rtmp_from, rtmp_to) if rtmp_src.include?(rtmp_from)
+      end
+      # Only write when changed, and make the file writable first — CocoaPods
+      # lays pod sources down read-only on CI (e.g. EAS Build), so an
+      # unconditional File.write fails with EACCES.
+      if rtmp_src != rtmp_orig
+        File.chmod(0644, rtmp_hk_stream) rescue nil
+        File.write(rtmp_hk_stream, rtmp_src)
+      end
+    end
     react_native_post_install(
       installer,
       config[:reactNativePath],

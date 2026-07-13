@@ -1534,10 +1534,10 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@htyf-mp/cli@0.3.6":
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/@htyf-mp/cli/-/cli-0.3.6.tgz#c3a1f09b2f922022ad2c48dd77d8cc0a93b4a2db"
-  integrity sha512-PY81guQyTdzLR3glTYh+J7WJyAL+fpumcQKB//ffD7Y6CyV1AVEgFoXzmMAjBQErAWPwEAuRtRxCJ+sfG9cZtw==
+"@htyf-mp/cli@0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@htyf-mp/cli/-/cli-0.3.7.tgz#6bb67ba39638d9bf5e74a799db53617be2df8d6d"
+  integrity sha512-k8WUCbCp2xxGlFcozjzVFwvrCXqT7JbbqizWrXdiBXX8UpfqdT7uB4bywDwcy70phX6uxXpAFeRLQX544mqRSg==
   dependencies:
     "@babel/core" "7.29.0"
     "@babel/plugin-proposal-decorators" "7.29.0"
@@ -9465,6 +9465,11 @@ react-native-nitro-modules@0.36.1:
   version "0.36.1"
   resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.36.1.tgz#f697d96f772ce17930f15b81ad4b1e42550569ef"
   integrity sha512-kBv/VvKqAmkXAvP1DxJMC9b/fRhh7JdSO4EUnPP46hJjrIFeFR8AwKm8mYaKZEuF014M/TVdv2vomVUW0umsQQ==
+
+react-native-nitro-rtmp-publisher@^0.14.1:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/react-native-nitro-rtmp-publisher/-/react-native-nitro-rtmp-publisher-0.14.1.tgz#b3dc77e9f327ce2e29448dd74791b7a520116695"
+  integrity sha512-PEpHJIcbcjdzHSqhIBqmWtx4dVRv0WyeUeMBXOiI3fWY2sI71U1nFQPVfA52LmVE31cdnzXvOzlSi497FzFaog==
 
 react-native-orientation-locker@1.7.0:
   version "1.7.0"

@@ -38,6 +38,20 @@ const MinePage = () => {
           style={styles.menuItem}
           onPress={() => {
             // @ts-ignore
+            navigation.navigate('StreamScreen');
+          }}
+        >
+          <Icon name="clock" size={24} color="#333" />
+          <Text style={styles.menuText}>开始直播</Text>
+          <Icon name="chevron-right" size={20} color="#999" />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.section}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => {
+            // @ts-ignore
             navigation.navigate('Account');
           }}
         >
